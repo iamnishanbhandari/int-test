@@ -8,7 +8,7 @@
     "start": "next start -p 3000",
     "test": "jest",
     "lint": "eslint .",
-    "ws-server": "ts-node scripts/ws-server.ts"
+    "ws-server": "node scripts/ws-server.js"
   },
   "dependencies": {
     "ethers": "^6.11.1",
