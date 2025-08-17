@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import type { WebSocketMessage } from "../types";
+import { persistMessage } from "../utils/persist";
 
 /**
 
@@ -13,6 +14,7 @@ const WebSocketListener: React.FC<{
   const [status, setStatus] = useState<
     "DISCONNECTED" | "CONNECTING" | "CONNECTED"
   >("DISCONNECTED");
+
   const wsRef = useRef<WebSocket | null>(null);
 
   useEffect(() => {
@@ -20,6 +22,7 @@ const WebSocketListener: React.FC<{
     setStatus("CONNECTING");
     const ws = new WebSocket(url);
     wsRef.current = ws;
+    const arr = [];
 
     ws.onopen = () => setStatus("CONNECTED");
     ws.onclose = () => setStatus("DISCONNECTED");
@@ -27,6 +30,9 @@ const WebSocketListener: React.FC<{
     ws.onmessage = (evt) => {
       try {
         const data = JSON.parse(evt.data);
+        arr.push(data);
+        persistMessage(data, arr.length % 5);
+
         onMessage?.(data);
       } catch {}
     };
@@ -34,7 +40,7 @@ const WebSocketListener: React.FC<{
     return () => {
       ws.close();
     };
-  }, [url, status]);
+  }, [url]);
 
   return (
     <div style={{ border: "1px solid #eee", padding: 16, borderRadius: 12 }}>

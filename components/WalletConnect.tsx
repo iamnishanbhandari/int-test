@@ -6,6 +6,7 @@ import type { WalletState } from "../types";
 
 const WalletConnect: React.FC = () => {
   const [state, setState] = useState<WalletState>({
+    name: "null",
     address: "",
     balance: "0",
     network: "",
@@ -27,7 +28,10 @@ const WalletConnect: React.FC = () => {
       const address = await signer.getAddress();
       const bal = await provider.getBalance(address);
       const network = await provider.getNetwork();
+      const name = await provider.lookupAddress(address);
+      console.log(name);
       setState({
+        name: name || "null",
         address,
         balance: formatEther(bal),
         network: String(network.chainId),
@@ -45,12 +49,14 @@ const WalletConnect: React.FC = () => {
     <div style={{ border: "1px solid #eee", padding: 16, borderRadius: 12 }}>
       <button
         onClick={connect}
-        style={{ padding: "8px 14px", borderRadius: 8 }}
-      >
+        style={{ padding: "8px 14px", borderRadius: 8 }}>
         Connect Wallet
       </button>
       {state.isConnected && (
         <div style={{ marginTop: 12 }}>
+          <div>
+            <b>Ens Name:</b> {state.name}
+          </div>
           <div>
             <b>Address:</b> {state.address}
           </div>
