@@ -1,4 +1,5 @@
 export interface WalletState {
+  name: string;
   address: string;
   balance: string;
   network: string;
@@ -8,10 +9,10 @@ export interface WalletState {
 export interface SignatureRequest {
   message: string;
   address: string;
-  signatureType: 'EIP191' | 'EIP712';
+  signatureType: "EIP191" | "EIP712";
 }
 
 export interface WebSocketMessage {
-  type: 'WALLET_UPDATE' | 'TRANSACTION' | 'ERROR';
+  type: "WALLET_UPDATE" | "TRANSACTION" | "ERROR";
   payload: any;
 }

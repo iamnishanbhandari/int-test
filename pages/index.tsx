@@ -22,8 +22,7 @@ export default function Home() {
         maxWidth: 800,
         margin: "40px auto",
         fontFamily: "ui-sans-serif, system-ui",
-      }}
-    >
+      }}>
       <h1>Web3 Integration Test (Bugged)</h1>
       <p>Connect your wallet, sign messages, and watch WebSocket updates.</p>
 
@@ -52,8 +51,7 @@ export default function Home() {
             marginTop: 12,
             maxHeight: 200,
             overflow: "auto",
-          }}
-        >
+          }}>
           {JSON.stringify(messages, null, 2)}
         </pre>
       </section>
